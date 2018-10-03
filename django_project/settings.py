@@ -29,8 +29,19 @@ ALLOWED_HOSTS = []
 
 
 # Application definition
+'''
+Then we copy the ‘BlogConfig’ name, open the projects settings.py file where we need to add 
+the path to this class within the installed apps list. Ex. Django_project > settings.py > 
+INSTALLED_APPS = […, ‘blog.apps.BlogConfig’,…]. **This is needed every time you add a new application. 
+You need this in order for Django to correctly search your templates and where Django looks for our 
+models when working with databases. 
 
+Next, let’s use that template we created so that it renders that whenever we navigate to our homepage. 
+We have to point our blog views to use those templates. Need to open up blog >> views.py. Best way to 
+load a template in the Django.shortcuts module: from django.shortcuts import render. **See views.py
+'''
 INSTALLED_APPS = [
+    'blog.apps.BlogConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',

@@ -1,0 +1,19 @@
+<!--Want to include all the repeated code/sections between home and about templates, so we
+    create a block in body section that child templates can override. So, basically the home 
+    and about templates will inherit from base.html, but they’ll be able to replace/override 
+    the content section with the stuff that is unique to each page.-->
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    {% if title %}
+        <title>Django Blog - {{ title }}</title>
+    {% else %}
+        <title>Django Blog</title>
+    {% endif %}
+</head>
+<body>
+    {% block content %}{% endblock %}
+</body>
+</html>

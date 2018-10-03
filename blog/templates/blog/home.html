@@ -1,0 +1,11 @@
+<!-- After adding base.html and using block, we can delete everything that is shared with base.html
+    Need to add extends "blog/base.html" and then write our for loop in a content block. **SEE BELOW** -->
+
+{% extends "blog/base.html" %}
+{% block content %}
+    {% for post in posts %}
+        <h1>{{ post.title }}</h1>
+        <p>By {{ post.author }} on {{ post.date_posted }}</post></p>
+        <p>{{ post.content }}</p>
+    {% endfor %}
+{% endblock content %}

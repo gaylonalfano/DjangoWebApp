@@ -1,2 +1,3 @@
 Django_Blog/
+django_project/*.pyc
 *.pyc
