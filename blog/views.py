@@ -1,5 +1,6 @@
 from django.shortcuts import render
 #from django.http import HttpResponse  - Can remove this once we start using/rendering templates instead
+from .models import Post
 
 '''
 What if we wanted our pages to have images or posts by different authors, etc.? We want to display them in our templates. 
@@ -34,7 +35,7 @@ posts = [
 def home(request):
     """Handle traffic from homepage of blog. Return what we want the user to see"""
     context = {
-        'posts': posts
+        'posts': Post.objects.all()
     }
     #return HttpResponse('<h1>Blog Home</h1>')  # Better is to use a template
     return render(request, 'blog/home.html', context)
