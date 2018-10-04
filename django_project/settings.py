@@ -41,6 +41,7 @@ We have to point our blog views to use those templates. Need to open up blog >> 
 load a template in the Django.shortcuts module: from django.shortcuts import render. **See views.py
 '''
 INSTALLED_APPS = [
+    'users.apps.UsersConfig',
     'blog.apps.BlogConfig',
     'django.contrib.admin',
     'django.contrib.auth',
