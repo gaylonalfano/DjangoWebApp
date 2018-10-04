@@ -5,22 +5,26 @@ from .models import Post
 '''
 What if we wanted our pages to have images or posts by different authors, etc.? We want to display them in our templates. 
 let’s add some dummy data into our blog > views.py and see how to pass that to our templates. Ex. posts which is a 
-list of dictionaries, each dict is a post
+list of dictionaries, each dict is a post. 
+
+After setting up a database to store data, you can update this views.py file to have context query the database
+for all posts using: Post.objects.all(). Once you confirm that it's now pulling post data from the database,
+you can delete (commented out) the dummy posts data (see below).
 '''
-posts = [
-    {
-        'author': 'CoreyMS', 
-        'title': 'Blog Post 1',
-        'content': 'First post content',
-        'date_posted': 'August 27, 2018'
-    },
-    {
-        'author': 'Jane Doe', 
-        'title': 'Blog Post 2',
-        'content': 'Second post content',
-        'date_posted': 'August 28, 2018'
-    }
-]
+# posts = [
+#     {
+#         'author': 'CoreyMS', 
+#         'title': 'Blog Post 1',
+#         'content': 'First post content',
+#         'date_posted': 'August 27, 2018'
+#     },
+#     {
+#         'author': 'Jane Doe', 
+#         'title': 'Blog Post 2',
+#         'content': 'Second post content',
+#         'date_posted': 'August 28, 2018'
+#     }
+# ]
 # Now, let's pretend we made a database call and got back this list of posts. We want to display 
 # this list of posts on our blog homeplage. We can pass these posts into our template just by passing
 # an argument with our data. We'll put our data into a dictionary within home() view (see below). 

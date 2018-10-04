@@ -15,7 +15,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-
+from users import views as user_views
 
 # We have one route to our admin. Now we're going to tell django which route
 # should get mapped to our blog urls. Need to import the include function from 
@@ -31,10 +31,17 @@ from django.urls import path, include
 # path to our blog empty '': path('', include('blog.urls'))
 # By doing that it will match the empty path to our project urls and our blog urls and return the home page.
 # Leaving it this way but could always add a non-empty path to our urlpatterns:  path('blog/', include('blog.urls'))
+
+# After learning about forms and using Django's UserCreationForm, we could either create a separate urls.py 
+# module for our users app (like we did for blog app), but Corey had us hold off. So instead we're going to import
+# our view (register() in views.py) directly into our projects urls module (here).
+
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('register/', user_views.register, name='register'),
     path('', include('blog.urls'))  # if we go to /blog, we should now reference/send users to our blog.urls
     # When Django encounters include(), it chops off the included portion of the url ("/blog") and only sends the
     # remaining string to the included blog.urls module to get processed. Since nothing remainining, it just sends empty
     # string ''. Now over to blog.urls...
+    
 ]
