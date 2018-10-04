@@ -1,11 +1,20 @@
 <!-- After adding base.html and using block, we can delete everything that is shared with base.html
-    Need to add extends "blog/base.html" and then write our for loop in a content block. **SEE BELOW** -->
+    Need to add extends "blog/base.html" and then write our for loop in a content block. **SEE BELOW**
+
+    For styling, added the snippet article.html to replace the original text in the for loop. -->
 
 {% extends "blog/base.html" %}
 {% block content %}
     {% for post in posts %}
-        <h1>{{ post.title }}</h1>
-        <p>By {{ post.author }} on {{ post.date_posted }}</post></p>
-        <p>{{ post.content }}</p>
+        <article class="media content-section">
+            <div class="media-body">
+                <div class="article-metadata">
+                    <a class="mr-2" href="#">{{ post.author }}</a>
+                    <small class="text-muted">{{ post.date_posted }}</small>
+                </div>
+                <h2><a class="article-title" href="#">{{ post.title }}</a></h2>
+                <p class="article-content">{{ post.content }}</p>
+            </div>
+        </article>
     {% endfor %}
 {% endblock content %}
