@@ -43,6 +43,7 @@ load a template in the Django.shortcuts module: from django.shortcuts import ren
 INSTALLED_APPS = [
     'users.apps.UsersConfig',
     'blog.apps.BlogConfig',
+    'crispy_forms',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -130,3 +131,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 
 STATIC_URL = '/static/'
+
+
+# Tell Crispy Forms which CSS Framework to use
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
