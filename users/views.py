@@ -16,9 +16,11 @@ def register(request):
         if form.is_valid():  # is it valid? UserCreationForm does all this
             form.save()  # saves the user data 
             username = form.cleaned_data.get('username')
-            messages.success(request, f"Account created for {username}!")
+            #messages.success(request, f"Account created for {username}!")  # before login page was created
+            messages.success(request, f"Your account has been created! You are now able to log in.")  # after login page created
             # Now redirect user to home page after success
-            return redirect("blog-home")  # name of urlpattern for blog home page
+            #return redirect("blog-home")  # name of urlpattern for blog home page
+            return redirect('login')  # after login page created
     else:
         #form = UserCreationForm()  # creates a new instance of the form
         form = UserRegisterForm()  # replaced w/ new form
