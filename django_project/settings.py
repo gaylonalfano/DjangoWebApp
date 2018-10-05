@@ -135,3 +135,8 @@ STATIC_URL = '/static/'
 
 # Tell Crispy Forms which CSS Framework to use
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
+
+# By default on the login page, Django will try to direct the user (after logging in)
+# to the account profile page. We can change that to direct to the home page instead by 
+# adding the following setting:
+LOGIN_REDIRECT_URL = 'blog-home'
