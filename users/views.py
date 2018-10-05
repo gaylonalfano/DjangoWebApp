@@ -8,14 +8,14 @@ def register(request):
     # with {'form': form} we're simply creating a blank form and rendering it out to the template
     # There are different types of http requests (get, post, etc.)
     # Adding conditional to handle POST or GET requests
-    if request.method == "POST":
-        form = UserCreationForm(request.POST)
-        if form.is_valid():
+    if request.method == "POST":  # was the request a POST request?
+        form = UserCreationForm(request.POST)  # create a new form that has the data that's within request.POST
+        if form.is_valid():  # is it valid? UserCreationForm does all this
+            form.save()  # saves the user data 
             username = form.cleaned_data.get('username')
             messages.success(request, f"Account created for {username}!")
             # Now redirect user to home page after success
             return redirect("blog-home")  # name of urlpattern for blog home page
     else:
-        form = UserCreationForm()
-    form = UserCreationForm()  # creates a new instance of the form
-    return render(request, 'users/register.html', {'form': form})
+        form = UserCreationForm()  # creates a new instance of the form
+    return render(request, 'users/register.html', {'form': form})  
