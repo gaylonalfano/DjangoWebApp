@@ -140,3 +140,9 @@ CRISPY_TEMPLATE_PACK = 'bootstrap4'
 # to the account profile page. We can change that to direct to the home page instead by 
 # adding the following setting:
 LOGIN_REDIRECT_URL = 'blog-home'
+
+# After using @login_required to the profile view, Django by default will try to direct
+# users (not logged in) to /accounts/login/?next=/profile/. We want to change it to our /login
+# view that we've already created/setup. 'login' is the name that we gave to our urlpattern in 
+# our login route:
+LOGIN_URL = 'login'
