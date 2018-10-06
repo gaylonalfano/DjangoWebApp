@@ -18,6 +18,7 @@ class Profile(models.Model):
     # Now create one-to-one relationship w/ existing User model
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     # Now that we have a user associated with this profile, we can add any fields
+    # Note that the upload_to param will create
     image = models.ImageField(default='default.jpg', upload_to='profile_pics')
 
     def __str__(self):
