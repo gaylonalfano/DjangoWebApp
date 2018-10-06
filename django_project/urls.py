@@ -16,6 +16,8 @@ Including another URLconf
 from django.contrib import admin
 from django.contrib.auth import views as auth_views
 from django.urls import path, include
+from django.conf import settings
+from django.conf.urls.static import static
 from users import views as user_views
 
 # We have one route to our admin. Now we're going to tell django which route
@@ -57,3 +59,17 @@ urlpatterns = [
     path('profile/', user_views.profile, name='profile')
 
 ]
+
+# Modified to be more explicit. Helps others who are reading our code. We're only adding this on when 
+# we're in DEBUG mode.
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+
+# Original snippet from django's docs for media: 
+# from django.conf import settings
+# from django.conf.urls.static import static
+
+# urlpatterns = [
+#     # ... the rest of your URLconf goes here ...
+# ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
