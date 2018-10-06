@@ -132,6 +132,11 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+# Changing the default location for where images are saved. For performance reasons, 
+# we want the files to be stored on the file system and not in the database. We also 
+# don't want to clutter up the root directory with different image directories.
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')  # the full path where we want Django to store uploaded files
+MEDIA_URL = "/media/"  # this is the public URL of the MEDIA_ROOT dir!
 
 # Tell Crispy Forms which CSS Framework to use
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
