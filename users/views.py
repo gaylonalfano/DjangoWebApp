@@ -25,3 +25,8 @@ def register(request):
         #form = UserCreationForm()  # creates a new instance of the form
         form = UserRegisterForm()  # replaced w/ new form
     return render(request, 'users/register.html', {'form': form})  
+
+
+# Let's create a user profile view that references the user profile template
+def profile(request):
+    return render(request, 'users/profile.html')
