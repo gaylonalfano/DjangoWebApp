@@ -3,6 +3,8 @@ from django.shortcuts import render, redirect
 from django.contrib import messages
 # After creating a new form with a new email field, import the form:
 from .forms import UserRegisterForm
+# To restrict users from viewing profile page without being logged in
+from django.contrib.auth.decorators import login_required
 
 # Let's create a register view to handle the logic for the register route
 def register(request):
@@ -28,5 +30,6 @@ def register(request):
 
 
 # Let's create a user profile view that references the user profile template
+@login_required
 def profile(request):
     return render(request, 'users/profile.html')
