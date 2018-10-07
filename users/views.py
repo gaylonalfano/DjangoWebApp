@@ -35,9 +35,25 @@ def register(request):
 # instances of these:
 @login_required
 def profile(request):
-    u_form = UserUpdateForm()  # instantiate as empty for now
-    p_form = ProfileUpdateForm()
-    # Let's pass these forms to our profile template by creating context dict
+    # Adding logic if the request.method is a POST route
+    if request.method == "POST":
+        u_form = UserUpdateForm(request.POST, instance=request.user)  # Fill in form fields with current user info
+        # Model forms just need an instance of that specific model object (Profile needs user.profile)
+        p_form = ProfileUpdateForm(request.POST, request.FILES, instance=request.user.profile)
+
+        # Checking whether submitted data is valid:
+        if u_form.is_valid() and p_form.is_valid():
+            u_form.save()
+            p_form.save()
+            messages.success(request, f"Your account has been updated!")
+            # You want to add a redirect instead of letting it drop to render() due to POST, GET, REDIRECT PATTERN
+            return redirect('profile')  # Causes browser to send another GET request so we don't get weird message
+       
+    else:
+        u_form = UserUpdateForm(instance=request.user)
+        p_form = ProfileUpdateForm(instance=request.user.profile)
+
+     # Let's pass these forms to our profile template by creating context dict
     context = {
         'u_form': u_form,
         'p_form': p_form
