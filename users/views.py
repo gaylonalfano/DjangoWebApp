@@ -2,7 +2,8 @@ from django.shortcuts import render, redirect
 #from django.contrib.auth.forms import UserCreationForm  -- Can remove after replacing with UserRegisterForm
 from django.contrib import messages
 # After creating a new form with a new email field, import the form:
-from .forms import UserRegisterForm
+# After creating the UserUpdateForm and ProfileUpdateForm, import:
+from .forms import UserRegisterForm, UserUpdateForm, ProfileUpdateForm
 # To restrict users from viewing profile page without being logged in
 from django.contrib.auth.decorators import login_required
 
@@ -30,6 +31,16 @@ def register(request):
 
 
 # Let's create a user profile view that references the user profile template
+# Later, after we created the UserUpdateForma and ProfileUpdateForm, let's create
+# instances of these:
 @login_required
 def profile(request):
-    return render(request, 'users/profile.html')
+    u_form = UserUpdateForm()  # instantiate as empty for now
+    p_form = ProfileUpdateForm()
+    # Let's pass these forms to our profile template by creating context dict
+    context = {
+        'u_form': u_form,
+        'p_form': p_form
+    }
+    # Now, let's pass this context into our template so we can access these forms
+    return render(request, 'users/profile.html', context)
