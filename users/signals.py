@@ -25,5 +25,5 @@ def create_profile(sender, instance, created, **kwargs):
 
 # Create a function that saves our profile every time the User object gets saved
 @receiver(post_save, sender=User)
-def create_profile(sender, instance, **kwargs):
+def save_profile(sender, instance, **kwargs):
     instance.profile.save()  # instance is the User. Save profile when user is saved.
