@@ -25,8 +25,10 @@ class Profile(models.Model):
     def __str__(self):
         return f"{self.user.username} Profile"  # gaylonalfano Profile
 
-    # This is the method that gets run after the model 
-    def save(self):
+    # This is the method that gets run after the model. NOTE: Signature of the base method in 
+    # class Model is save(self, **kwargs) and method overriding it should have the same signature, 
+    # so adding **kwargs as an argument to save makes sense
+    def save(self, **kwargs):
         super().save()  # the parent class save() would run when we save an instance of profile
         # Now, we're going to grab the image that was saved and resize it using Pillow:
         # To open the image of the CURRENT profile instance do:
