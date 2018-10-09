@@ -1,8 +1,9 @@
 from django.shortcuts import render
 #from django.http import HttpResponse  - Can remove this once we start using/rendering templates instead
 from .models import Post
-# Importing a class-based ListView. Need to create a class next
-from django.views.generic import ListView
+# Importing a class-based ListView then create a class:
+# Importing a class-based DetailView then create a class:
+from django.views.generic import ListView, DetailView
 
 '''
 What if we wanted our pages to have images or posts by different authors, etc.? We want to display them in our templates. 
@@ -60,7 +61,12 @@ class PostListView(ListView):
     # 'posts' above in our home function view). Since we already have the template,
     # we'll set this variable/attribute here in this PostListView and that should do it:
     context_object_name = 'posts'
+    # Adding an ordering attribute so have most recent posts up at the top of blog:
+    ordering = ['-date_posted']
 
+# Creating another class-based view that uses all the default naming conventions:
+class PostDetailView(DetailView):
+    model = Post
 
 
 

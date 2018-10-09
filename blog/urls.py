@@ -1,7 +1,7 @@
 from django.urls import path
 from . import views  # "." means current directory
 # Section 10 adding/using class-based views so need to import
-from .views import PostListView  # Could use views but this is to importing PL directly
+from .views import PostListView, PostDetailView  # Could use views but this is to importing PL directly
 
 
 # Now let's create a path to our blog home page
@@ -18,6 +18,7 @@ from .views import PostListView  # Could use views but this is to importing PL d
 # Next route: About page
 urlpatterns = [
     path('', PostListView.as_view(), name="blog-home"),
+    path('post/<int:pk>/', PostDetailView.as_view(), name="post-detail"),
     #path('', views.home, name="blog-home"),  
     path('about/', views.about, name="blog-about")  # Don't need to add anything to project.urls patterns since we're still under /blog
 ]
