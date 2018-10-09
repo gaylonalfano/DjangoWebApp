@@ -1,6 +1,8 @@
 from django.shortcuts import render
 #from django.http import HttpResponse  - Can remove this once we start using/rendering templates instead
 from .models import Post
+# Importing a class-based ListView. Need to create a class next
+from django.views.generic import ListView
 
 '''
 What if we wanted our pages to have images or posts by different authors, etc.? We want to display them in our templates. 
@@ -43,6 +45,24 @@ def home(request):
     }
     #return HttpResponse('<h1>Blog Home</h1>')  # Better is to use a template
     return render(request, 'blog/home.html', context)
+
+
+# Section 10 - Creating a class since we're going to see the difference 
+# between a class-based view (PostListView) and a function-based view (home):
+class PostListView(ListView):
+    # Need to create a variable called model. model will tell our ListView 
+    # what model to query in order to create the list (all of our posts):
+    model = Post
+    # Changing which template we want this PostListView to look for:
+    template_name = 'blog/home.html'  # Default is <app>/<model>_<viewtype>.html
+    # Adding template_name won't work just yet because it doesn't know the variable name
+    # in our template that we're going to be looping over (default is object_list but we used
+    # 'posts' above in our home function view). Since we already have the template,
+    # we'll set this variable/attribute here in this PostListView and that should do it:
+    context_object_name = 'posts'
+
+
+
 
 # Next, need to map URL pattern to this view function just yet. Need to create
 # a new module in our blog directory called URLS.py. In that file, we'll map the
