@@ -3,7 +3,12 @@ from django.shortcuts import render
 from .models import Post
 # Importing a class-based ListView then create a class:
 # Importing a class-based DetailView then create a class:
-from django.views.generic import ListView, DetailView
+# Importing a class-based CreateView then create a class:
+from django.views.generic import (
+    ListView,
+    DetailView,
+    CreateView
+)
 
 '''
 What if we wanted our pages to have images or posts by different authors, etc.? We want to display them in our templates. 
@@ -68,6 +73,11 @@ class PostListView(ListView):
 class PostDetailView(DetailView):
     model = Post
 
+# Creating a Create view. It's a form where we create a new post, so let's add some fields:
+# After we create this class/view, we need to update our url patterns with this new view.
+class PostCreateView(CreateView):
+    model = Post
+    fields = ['title', 'content']
 
 
 # Next, need to map URL pattern to this view function just yet. Need to create
