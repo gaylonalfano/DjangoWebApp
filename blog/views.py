@@ -7,8 +7,14 @@ from .models import Post
 from django.views.generic import (
     ListView,
     DetailView,
-    CreateView
+    CreateView,
+    UpdateView
 )
+# Need to make it if we try to access a create post detail page without being logged in,
+# then should be redirected to the login page first. For class-based views we can't use the
+# @login_required decorator like function-based views. Therefore, need to inherit from a 
+# Login Mixin class then add/inherit this class into our classes below:
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 '''
 What if we wanted our pages to have images or posts by different authors, etc.? We want to display them in our templates. 
@@ -75,10 +81,18 @@ class PostDetailView(DetailView):
 
 # Creating a Create view. It's a form where we create a new post, so let's add some fields:
 # After we create this class/view, we need to update our url patterns with this new view.
-class PostCreateView(CreateView):
+# Need to inherit LoginRequiredMixin class to redirect users to login page if they try to view
+# a create post detail page if not logged in. NOTE that you MUST inherit this on the FAR LEFT!:
+class PostCreateView(LoginRequiredMixin, CreateView):
     model = Post
     fields = ['title', 'content']
 
+    # overriding the form_valid() method:
+    def form_valid(self, form):
+        # Before submitting the form, take the instance and set the author equal to current user
+        form.instance.author = self.request.user
+        # After setting author to current user, return the form:
+        return super().form_valid(form)
 
 # Next, need to map URL pattern to this view function just yet. Need to create
 # a new module in our blog directory called URLS.py. In that file, we'll map the

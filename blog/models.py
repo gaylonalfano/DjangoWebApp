@@ -9,6 +9,9 @@
 from django.db import models
 from django.utils import timezone
 from django.contrib.auth.models import User
+# Want to get/return the URL as a string to the view so need to import reverse. 
+# The view will handle the redirect for us:
+from django.urls import reverse
 
 # Let's create our post model
 class Post(models.Model):
@@ -21,3 +24,7 @@ class Post(models.Model):
     # is really basic. This results in:  <QuerySet [<Post: Blog 1>]>
     def __str__(self):
         return self.title
+
+    # Need to create the get_absolute_url method so Django can find the location to a specific post
+    def get_absolute_url(self):
+        return reverse('post-detail', kwargs={'pk':self.pk})
