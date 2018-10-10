@@ -4,7 +4,8 @@ from . import views  # "." means current directory
 from .views import (
     PostListView, 
     PostDetailView, # Could use views but this is to importing PL directly
-    PostCreateView
+    PostCreateView,
+    PostUpdateView
 )
 
 # Now let's create a path to our blog home page
@@ -23,6 +24,8 @@ urlpatterns = [
     path('', PostListView.as_view(), name="blog-home"),
     path('post/<int:pk>/', PostDetailView.as_view(), name="post-detail"),
     path('post/new/', PostCreateView.as_view(), name="post-create"),
-    #path('', views.home, name="blog-home"),  
+    #path('', views.home, name="blog-home"),
+    path('post/<int:pk>/update/', PostUpdateView.as_view(), name="post-update"),  
     path('about/', views.about, name="blog-about")  # Don't need to add anything to project.urls patterns since we're still under /blog
+
 ]

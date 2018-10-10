@@ -94,6 +94,19 @@ class PostCreateView(LoginRequiredMixin, CreateView):
         # After setting author to current user, return the form:
         return super().form_valid(form)
 
+# Now creating an UpdateView
+class PostUpdateView(LoginRequiredMixin, UpdateView):
+    model = Post
+    fields = ['title', 'content']
+
+    # overriding the form_valid() method:
+    def form_valid(self, form):
+        # Before submitting the form, take the instance and set the author equal to current user
+        form.instance.author = self.request.user
+        # After setting author to current user, return the form:
+        return super().form_valid(form)
+
+
 # Next, need to map URL pattern to this view function just yet. Need to create
 # a new module in our blog directory called URLS.py. In that file, we'll map the
 # urls we want to correspond to each view function.
