@@ -8,13 +8,15 @@ from django.views.generic import (
     ListView,
     DetailView,
     CreateView,
-    UpdateView
+    UpdateView,
+    DeleteView
 )
 # Need to make it if we try to access a create post detail page without being logged in,
 # then should be redirected to the login page first. For class-based views we can't use the
 # @login_required decorator like function-based views. Therefore, need to inherit from a 
 # Login Mixin class then add/inherit this class into our classes below:
-from django.contrib.auth.mixins import LoginRequiredMixin
+# To restrict users from editing other users' posts, import UserPassesTestMixin:
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 
 '''
 What if we wanted our pages to have images or posts by different authors, etc.? We want to display them in our templates. 
@@ -95,7 +97,7 @@ class PostCreateView(LoginRequiredMixin, CreateView):
         return super().form_valid(form)
 
 # Now creating an UpdateView
-class PostUpdateView(LoginRequiredMixin, UpdateView):
+class PostUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Post
     fields = ['title', 'content']
 
@@ -105,6 +107,16 @@ class PostUpdateView(LoginRequiredMixin, UpdateView):
         form.instance.author = self.request.user
         # After setting author to current user, return the form:
         return super().form_valid(form)
+
+    # Creating a function to restrict users from updating other users' posts
+    # Need to use UserPassesTestMixin so need to inherit that class within PostUpdateView:
+    def test_func(self):
+        # Retrieve the exact post that we're updating:
+        post = self.get_object()
+        # Check if user is the author of the current post:
+        if self.request.user == post.author:
+            return True
+        return False
 
 
 # Next, need to map URL pattern to this view function just yet. Need to create
