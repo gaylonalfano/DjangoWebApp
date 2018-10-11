@@ -5,7 +5,8 @@ from .views import (
     PostListView, 
     PostDetailView, # Could use views but this is to importing PL directly
     PostCreateView,
-    PostUpdateView
+    PostUpdateView,
+    PostDeleteView
 )
 
 # Now let's create a path to our blog home page
@@ -25,7 +26,8 @@ urlpatterns = [
     path('post/<int:pk>/', PostDetailView.as_view(), name="post-detail"),
     path('post/new/', PostCreateView.as_view(), name="post-create"),
     #path('', views.home, name="blog-home"),
-    path('post/<int:pk>/update/', PostUpdateView.as_view(), name="post-update"),  
+    path('post/<int:pk>/update/', PostUpdateView.as_view(), name="post-update"),
+    path('post/<int:pk>/delete/', PostDeleteView.as_view(), name="post-delete"),  
     path('about/', views.about, name="blog-about")  # Don't need to add anything to project.urls patterns since we're still under /blog
 
 ]

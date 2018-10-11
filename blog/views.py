@@ -119,6 +119,20 @@ class PostUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
         return False
 
 
+# Creating a PostDeleteView for deleting posts. Need to import the Mixins to 
+# ensure that the user is logged in and is the actual author of the post
+class PostDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
+    model = Post
+    # Creating a function to restrict users from updating other users' posts
+    # Need to use UserPassesTestMixin so need to inherit that class within PostUpdateView:
+    def test_func(self):
+        # Retrieve the exact post that we're updating:
+        post = self.get_object()
+        # Check if user is the author of the current post:
+        if self.request.user == post.author:
+            return True
+        return False
+
 # Next, need to map URL pattern to this view function just yet. Need to create
 # a new module in our blog directory called URLS.py. In that file, we'll map the
 # urls we want to correspond to each view function.
