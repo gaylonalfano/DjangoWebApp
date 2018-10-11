@@ -123,6 +123,8 @@ class PostUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
 # ensure that the user is logged in and is the actual author of the post
 class PostDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     model = Post
+    # In order to delete a post, it needs a success_url to know where to redirect:
+    success_url = '/' # '/' is the homepage
     # Creating a function to restrict users from updating other users' posts
     # Need to use UserPassesTestMixin so need to inherit that class within PostUpdateView:
     def test_func(self):
