@@ -76,6 +76,9 @@ class PostListView(ListView):
     context_object_name = 'posts'
     # Adding an ordering attribute so have most recent posts up at the top of blog:
     ordering = ['-date_posted']
+    # Adding pagination. With class-based views, don't need to import Paginator class
+    # Instead, just need to set the paginate_by = (number of posts per page) attribute:
+    paginate_by = 2  # we'll set it like 5 or 10 posts per page later
 
 # Creating another class-based view that uses all the default naming conventions:
 class PostDetailView(DetailView):
