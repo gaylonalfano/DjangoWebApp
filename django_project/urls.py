@@ -54,7 +54,9 @@ urlpatterns = [
     # After import django's default user login/logout views, time to create paths for them:
     path('login/', auth_views.LoginView.as_view(template_name='users/login.html'), name='login'),
     path('logout/', auth_views.LogoutView.as_view(template_name='users/logout.html'), name='logout'),
-    
+    # Creating a route that provides a form for our user to fill out that will email reset password instructions:
+    path('password-reset/', auth_views.PasswordResetView.as_view(template_name='users/password_reset.html'), name='password_reset'),
+
     # After creating a user profile view and the users/profile.html template, let's create a route to use this view:
     path('profile/', user_views.profile, name='profile')
 
