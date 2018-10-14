@@ -105,8 +105,8 @@ class UserPostListView(ListView):
     # Instead, just need to set the paginate_by = (number of posts per page) attribute:
     paginate_by = 5  # we'll set it like 5 or 10 posts per page later
 
-    # Overriding get_query_set function to modify what the ListView query returns:
-    def get_query_set(self):
+    # Overriding get_queryset function to modify what the ListView query returns:
+    def get_queryset(self):
         # Get the user associated with the username that we're going to get from the URL
         # if the user exists we'll capture them in the user variable. 
         # if the user doesn't exist then return 404 telling them the user doesn't exist.
