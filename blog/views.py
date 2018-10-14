@@ -1,6 +1,9 @@
-from django.shortcuts import render
+# Return 404 if the user doesn't exist for UserPostListView using get_object_or_404
+from django.shortcuts import render, get_object_or_404
 #from django.http import HttpResponse  - Can remove this once we start using/rendering templates instead
 from .models import Post
+# Importing User so we can grab user for only displaying posts by that user:
+from django.contrib.auth.models import User
 # Importing a class-based ListView then create a class:
 # Importing a class-based DetailView then create a class:
 # Importing a class-based CreateView then create a class:
@@ -78,7 +81,39 @@ class PostListView(ListView):
     ordering = ['-date_posted']
     # Adding pagination. With class-based views, don't need to import Paginator class
     # Instead, just need to set the paginate_by = (number of posts per page) attribute:
-    paginate_by = 2  # we'll set it like 5 or 10 posts per page later
+    paginate_by = 5  # we'll set it like 5 or 10 posts per page later
+
+# Create a route that will display only the posts from a particular user when you click their link.
+# If the user has lots of posts, paginate those posts as well. Similar to PostListView so copy:
+class UserPostListView(ListView):
+    # Need to create a variable called model. model will tell our ListView 
+    # what model to query in order to create the list (all of our posts):
+    model = Post
+    # Changing which template we want this PostListView to look for:
+    template_name = 'blog/user_posts.html'  # Default is <app>/<model>_<viewtype>.html
+    # Currently this will still list all the posts from our Post model. However, we want
+    # to add a filter to this so that only it gets the posts from a certain user. This will
+    # come directly from the URL. So, when we create a new URL pattern for this, we'll specify
+    # the username and the URL path itself. So we'll set that when we create the URL pattern in'
+    # a second, but for now let's just assume that we have a username variable passed into the URL.
+    # In order to modify the query set that this ListView returns, we can override a method 
+    # called get_query_set and change the query set from within there.
+
+    # we'll set this variable/attribute here in this UserPostListView and that should do it:
+    context_object_name = 'posts'
+    # Adding pagination. With class-based views, don't need to import Paginator class
+    # Instead, just need to set the paginate_by = (number of posts per page) attribute:
+    paginate_by = 5  # we'll set it like 5 or 10 posts per page later
+
+    # Overriding get_query_set function to modify what the ListView query returns:
+    def get_query_set(self):
+        # Get the user associated with the username that we're going to get from the URL
+        # if the user exists we'll capture them in the user variable. 
+        # if the user doesn't exist then return 404 telling them the user doesn't exist.
+        user = get_object_or_404(User, username=self.kwargs.get('username'))
+        # Limit the results of query and order by desc date posted:
+        return Post.objects.filter(author=user).order_by('-date_posted')
+
 
 # Creating another class-based view that uses all the default naming conventions:
 class PostDetailView(DetailView):
