@@ -151,3 +151,13 @@ LOGIN_REDIRECT_URL = 'blog-home'
 # view that we've already created/setup. 'login' is the name that we gave to our urlpattern in 
 # our login route:
 LOGIN_URL = 'login'
+
+# Set up our email functionality
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+# Now you need to pass in your username and password. 
+# Retrieve these from environment variables
+EMAIL_HOST_USER = os.environ.get('EMAIL_USER')  # your actual gmail address
+EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_PASS')
