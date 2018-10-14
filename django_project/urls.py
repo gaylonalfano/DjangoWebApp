@@ -56,7 +56,10 @@ urlpatterns = [
     path('logout/', auth_views.LogoutView.as_view(template_name='users/logout.html'), name='logout'),
     # Creating a route that provides a form for our user to fill out that will email reset password instructions:
     path('password-reset/', auth_views.PasswordResetView.as_view(template_name='users/password_reset.html'), name='password_reset'),
-
+    # Create a route to tell user the request is successful and an email has been sent:
+    path('password-reset/done/', auth_views.PasswordResetDoneView.as_view(template_name='users/password_reset_done.html'), name='password_reset_done'),
+    # Create the password-reset-confirm route and pass in the uidb64 and token parameters:
+    path('password-reset-confirm/<uidb64>/<token>/', auth_views.PasswordResetConfirmView.as_view(template_name='users/password_reset_email.html'), name='password_reset_confirm'),
     # After creating a user profile view and the users/profile.html template, let's create a route to use this view:
     path('profile/', user_views.profile, name='profile')
 
